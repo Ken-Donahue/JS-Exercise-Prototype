@@ -81,14 +81,15 @@ function Car(model, milesPerGallon) {
 }
 
 Car.prototype.fill = function(gallons){
-  return this.tank = this.tank + gallons;
+  return this.tank += gallons;
 }
 
 Car.prototype.drive = function(distance){
-  if(distance > (this.tank * this.milesPerGallon)){
-    return this.odometer = this.odometer = (this.tank * this.milesPerGallon), this.tank = 0, `I ran out of fuel at ${this.odometer} miles!`;
+  if(distance >= (this.tank * this.milesPerGallon)){
+    return this.odometer += (this.tank * this.milesPerGallon), this.tank = 0, `I ran out of fuel at ${this.odometer} miles!`;
   }
-  return this.odometer = this.odometer + distance, this.tank = this.tank - (distance / this.milesPerGallon);
+
+  return this.odometer += distance, this.tank -= (distance / this.milesPerGallon);
 }
 
 
@@ -99,18 +100,25 @@ Car.prototype.drive = function(distance){
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby(favoriteToy) {
-
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age)
+  this.favoriteToy = favoriteToy;
 }
+
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
+
+Object.setPrototypeOf(Baby.prototype, Person.prototype); // methods on prototype
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. If in global scope, 'this' is the console Object
+  2. The object before the dot is 'this' when calling a function
+  3. With a constructor function, this refers to the instance the object created
+  4. Call and apply define 'this' explicitly
 */
 
 
