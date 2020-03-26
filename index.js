@@ -39,8 +39,24 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
+function Person(name, age) {
+  this.name = name,
+  this.age = age,
+  this.stomach = []
+};
 
+Person.prototype.eat = function(someFood){
+  if(this.stomach.length <=9){
+    return this.stomach.push(someFood);
+  }
+}
+
+Person.prototype.poop = function(){
+  return this.stomach = [];
+}
+
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`;
 }
 
 /*
@@ -57,9 +73,25 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-
+function Car(model, milesPerGallon) {
+  this.model = model,
+  this.milesPerGallon = milesPerGallon,
+  this.tank = 0,
+  this.odometer = 0
 }
+
+Car.prototype.fill = function(gallons){
+  return this.tank += gallons;
+}
+
+Car.prototype.drive = function(distance){
+  if(distance >= (this.tank * this.milesPerGallon)){
+    return this.odometer += (this.tank * this.milesPerGallon), this.tank = 0, `I ran out of fuel at ${this.odometer} miles!`;
+  }
+
+  return this.odometer += distance, this.tank -= (distance / this.milesPerGallon);
+}
+
 
 /*
   TASK 3
@@ -68,18 +100,25 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
-
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age)
+  this.favoriteToy = favoriteToy;
 }
+
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
+
+Object.setPrototypeOf(Baby.prototype, Person.prototype); // methods on prototype
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. If in global scope, 'this' is the console Object
+  2. The object before the dot is 'this' when calling a function
+  3. With a constructor function, this refers to the instance the object created
+  4. Call and apply define 'this' explicitly
 */
 
 
